@@ -10,12 +10,12 @@ const connectDB = async () => {
       process.env.MONGODB_URI,
       {
         dbName: DB_NAME,
-        useNewUrlParser: true,
-        useUnifiedTopology: true
+        // useNewUrlParser: true,
+        // useUnifiedTopology: true
       }
     );
     console.log(
-      `/n MongoDB Connect !! DB HOST ${connectionDB.connection.host}`
+      `MongoDB Connect !! DB HOST ${connectionDB.connection.host}`
     );
   } catch (error) {
     console.error("DB Connection Failed : ", error);
