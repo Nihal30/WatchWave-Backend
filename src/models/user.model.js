@@ -46,7 +46,7 @@ const userSchema = new Schema(
       type: String,
     },
   },
-  { timestems: true }
+  { timestamps: true }
 );
 
 // using mongoose hook to bcrypt the password using pre hook
