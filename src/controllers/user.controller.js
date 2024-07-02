@@ -2,7 +2,7 @@ import { ApiError } from "../utils/apiErrors.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
-import { apiResponse } from "../utils/apiResponse.js";
+import { ApiResponse } from "../utils/apiResponse.js";
 
 const generateAccessTokenAndRefreshTokens = async (userId) => {
   try {
@@ -17,6 +17,7 @@ const generateAccessTokenAndRefreshTokens = async (userId) => {
 
     return { accessToken, refreshToken };
   } catch (error) {
+    console.log('error', error)
     throw new ApiError(
       500,
       "Something went wrong while generating refresh and access token"
@@ -92,7 +93,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   return res
     .status(201)
-    .json(new apiResponse(200, createdUser, "User Registered successfully"));
+    .json(new ApiResponse(200, createdUser, "User Registered successfully"));
 });
 
 // req body => data
@@ -104,7 +105,7 @@ const registerUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
   const { username, email, password } = req.body;
 
-  if (!email || !username) {
+  if (!(email || username)) {
     throw new ApiError(400, "username or email is required");
   }
 
@@ -140,7 +141,7 @@ const loginUser = asyncHandler(async (req, res) => {
     .cookie("accessToken", accessToken, options)
     .cookie("refreshToken", refreshToken, options)
     .json(
-      new apiResponse(
+      new ApiResponse(
         200,
         {
           user: loggedInUser,
